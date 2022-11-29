@@ -1,6 +1,6 @@
 {
   "name": "@dashincubator/ripemd160",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "Browser-friendly ripemd160 hasher",
   "keywords": [
     "string",
@@ -14,9 +14,9 @@
   "license": "MIT",
   "main": "./index.js",
   "files": [
-      "index.js",
-      "lib/",
-      "ripemd160.js"
+    "index.js",
+    "lib/",
+    "ripemd160.js"
   ],
   "types": "./types/index.d.ts",
   "repository": {
