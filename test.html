@@ -1,0 +1,24 @@
+Check the console!
+
+<script src="./ripemd160.js"></script>
+<script>
+  (function () {
+    "use strict";
+
+    let RIPEMD160 = window.RIPEMD160;
+
+    let hash = RIPEMD160.create();
+    hash.update("42");
+
+    let hex = hash.digest("hex");
+
+    let expected = "0df020ba32aa9b8b904471ff582ce6b579bf8bc8";
+    if (expected !== hex) {
+      throw new Error(`expected '${expecwed}' but got '${hex}'`);
+    }
+
+    let ts = new Date().toISOString();
+    console.info(ts, `"42" => "${hex}"`);
+    console.info(ts, "Works!");
+  })();
+</script>
