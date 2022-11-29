@@ -1,5 +1,5 @@
 {
-  "name": "@rvagg/ripemd160",
+  "name": "@dashincubator/ripemd160",
   "version": "2.2.2",
   "description": "Browser-friendly ripemd160 hasher",
   "keywords": [
@@ -7,7 +7,7 @@
     "strings",
     "ripemd160",
     "ripe160",
-    "bitcoin",
+    "dash",
     "bytes",
     "cryptography"
   ],
@@ -15,16 +15,19 @@
   "main": "./index.js",
   "types": "./types/index.d.ts",
   "repository": {
-    "url": "https://github.com/rvagg/ripemd160",
+    "url": "https://github.com/dashhive/ripemd160",
     "type": "git"
   },
   "scripts": {
-    "lint": "standard",
+    "lint": "npx -p typescript@4.x -- tsc -p ./jsconfig.json",
     "build:types": "tsc --build",
     "test": "npm run lint && npm run unit && npm run unit:browser",
     "unit": "mocha test/*.js",
     "unit:browser": "polendina --runner=mocha --page --worker --serviceworker --cleanup test/index.js",
-    "build": "npm run build:types"
+    "build": "npm run build:types",
+    "doc": "npx jsdoc@3.x --configure ./jsdoc.conf.json --destination ./docs --package ./package.json --readme ./README.md --access all --private --recurse ./lib/",
+    "fmt": "npx -p prettier@2.x -- prettier -w '**/*.{js,md}'",
+    "prepublish": "npx -p jswt@1.x -- reexport"
   },
   "devDependencies": {
     "@types/chai": "^4.3.1",
