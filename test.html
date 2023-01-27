@@ -7,10 +7,14 @@ Check the console!
 
     let RIPEMD160 = window.RIPEMD160;
 
-    let hash = RIPEMD160.create();
-    hash.update("42");
+    let ripemd160 = RIPEMD160.create();
+    let data = new Uint8Array([52, 50]);
+    ripemd160.update(data);
 
-    let hex = hash.digest("hex");
+    let hash = ripemd160.digest();
+    let hex = hash.reduce(function (hex, byte) {
+      return hex + byte.toString(16).padStart(2, "0");
+    }, "");
 
     let expected = "0df020ba32aa9b8b904471ff582ce6b579bf8bc8";
     if (expected !== hex) {
