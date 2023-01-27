@@ -1,4 +1,23 @@
-### [2.2.2](https://github.com/rvagg/ripemd160/compare/v2.2.1...v2.2.2) (2022-05-03)
+## [3.0.0](https://github.com/dashincubator/ripemd160/compare/v2.3.0...v3.0.0) (2023-01-27)
+
+### Breaking Changes
+
+- Accept Uint8Array ONLY (no dependency on `TextEncoder`, support node < 10.0)
+- Output Uint8Array ONLY (no ambiguous type on `digest()`)
+- `RIPEMD160.create()` (no `new`, doesn't overwrite default export)
+- Remove cruft (dev deps, junk files)
+
+## [2.3.0](https://github.com/dashincubator/ripemd160/compare/v2.2.2...v2.3.0) (2023-01-27)
+
+### Trivial Changes
+
+- fork to `@dashincubator/ripemd160`
+- Add `.create()` (avoid `new`)
+- Vanilla JS support (transpile-free browser compatibility)
+- make `Prettier`
+- rename `index.js` to `ripemd160.js`
+
+## [2.2.2](https://github.com/rvagg/ripemd160/compare/v2.2.1...v2.2.2) (2022-05-03)
 
 ### Trivial Changes
 
