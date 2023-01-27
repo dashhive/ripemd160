@@ -1,7 +1,36 @@
-(function (exports) {
+/**
+ * @typedef RIPEMD160
+ * @prop {RipeCreate} create
+ */
+
+/**
+ * @callback RipeCreate
+ * @returns {ripemd160}
+ */
+
+/**
+ * @typedef ripemd160
+ * @prop {RipeUpdate} update
+ * @prop {RipeDigest} digest
+ */
+
+/**
+ * @callback RipeDigest
+ * @returns {Uint8Array}
+ */
+
+/**
+ * @callback RipeUpdate
+ * @param {Uint8Array} data
+ * @returns {ripemd160}
+ */
+
+/** @type {RIPEMD160} */
+//@ts-ignore
+var RIPEMD160 = ("object" === typeof module && exports) || {};
+(function (window, RIPEMD160) {
   "use strict";
 
-  const utf8Encoder = new TextEncoder();
   const ARRAY16 = new Array(16);
 
   const zl = [
@@ -37,7 +66,7 @@
 
   const blockSize = 64;
 
-  class RIPEMD160 {
+  class _RIPEMD160 {
     constructor() {
       // state
       /** @private */
@@ -64,19 +93,13 @@
       this._finalized = false;
     }
 
-    /**
-     * @param {Uint8Array|string} data
-     * @returns {RIPEMD160}
-     */
+    /** @type {RipeUpdate} */
     update(data) {
       if (this._finalized) {
         throw new Error("Digest already called");
       }
-      if (typeof data === "string") {
-        data = utf8Encoder.encode(data);
-      }
       if (!(data instanceof Uint8Array)) {
-        throw new Error("update() requires a Uint8Array or string");
+        throw new Error("update() requires a Uint8Array");
       }
 
       // consume data
@@ -171,10 +194,6 @@
       this._a = t;
     }
 
-    /**
-     * @param {'hex'} [encoding]
-     * @returns {Uint8Array|string}
-     */
     digest(encoding) {
       if (this._finalized) {
         throw new Error("Digest already called");
@@ -182,15 +201,6 @@
       this._finalized = true;
 
       const dig = this._digest();
-      if (encoding) {
-        if (encoding === "hex") {
-          return dig.reduce(
-            (hex, byte) => hex + byte.toString(16).padStart(2, "0"),
-            "",
-          );
-        }
-        throw new Error(`Unknown encoding: ${encoding}`); // sorry, we're a one-trick pony here
-      }
       return dig;
     }
 
@@ -233,7 +243,7 @@
   }
 
   RIPEMD160.create = function () {
-    return new RIPEMD160();
+    return new _RIPEMD160();
   };
 
   /**
@@ -319,12 +329,7 @@
   function fn5(a, b, c, d, e, m, k, s) {
     return (rotl((a + (b ^ (c | ~d)) + m + k) | 0, s) + e) | 0;
   }
-
-  //@ts-ignore - for browser
-  exports.RIPEMD160 = RIPEMD160;
-
-  // for node and some bundlers
-  if ("undefined" !== typeof module) {
-    module.exports = RIPEMD160;
-  }
-})(("undefined" !== typeof module && module.exports) || window);
+})(("object" === typeof window && window) || {}, RIPEMD160);
+if ("object" === typeof module) {
+  module.exports = RIPEMD160;
+}

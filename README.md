@@ -29,12 +29,33 @@ let RIPEMD160 = require("@dashincubator/ripemd160");
 ## Example
 
 ```js
-let hash = RIPEMD160.create();
-hash.update("42");
+let data = new Uint8Array([52, 50]);
 
-let hex = hash.digest("hex");
+let ripemd160 = RIPEMD160.create();
+ripemd160.update(data);
+
+let hash = ripemd160.digest();
+console.log(hash);
+// Uint8Array(20) [ 13, 240, ... 139, 200 ]
+```
+
+Uint8Array to Hex:
+
+```js
+let hex = hash.reduce(function (hex, byte) {
+  return hex + byte.toString(16).padStart(2, "0");
+}, "");
+
 console.log(hex);
 // "0df020ba32aa9b8b904471ff582ce6b579bf8bc8"
+```
+
+String to Uint8Array:
+
+```js
+let message = "42";
+let utf8Encoder = new TextEncoder();
+let data = utf8Encoder.encode(message);
 ```
 
 ## History
@@ -44,8 +65,10 @@ plain, old browser JavaScript (but not incompatible with node or bundlers)
 
 - Fork of https://github.com/rvagg/ripemd160
   - Adds TypeScript types exports
-  - Operates natively on `Uint8Array`s
-  - Has no dependencies, even in the browser (i.e. no `Buffer`)
+  - Operates natively on `Uint8Array`s ONLY
+    - (use `new TextEncoder().encode(str)` encode strings to `Uint8Array`s
+  - Has no dependencies, even in the browser (i.e. no `Buffer`, no
+    `TextEncoder`)
   - Does not handle streaming operations (i.e. just use `update()` and
     `digest()`)
   - Forked from https://github.com/crypto-browserify/ripemd160
